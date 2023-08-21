@@ -27,11 +27,12 @@ the course, this project extended the learning by:
 
 ## Documentation and Screenshots
 
+https://github.com/jasnoludek/supersqa-demostore-automation/assets/132239295/2a288a86-2ffe-445e-8e4e-f4b4376c83db
 
 
 
 
-- [Test Plan](supersqa-demostore-automation/Documentation/test_plan_supersqa_ecommerce_store.pdf)
+- [Test Plan](/Documentation/test_plan_supersqa_ecommerce_store.pdf)
 - [Bug Report Video](https://github.com/jasnoludek/supersqa-demostore-automation/assets/132239295/2a288a86-2ffe-445e-8e4e-f4b4376c83db)
 - [Test Case Example](https://github.com/jasnoludek/supersqa-demostore-automation/assets/132239295/d7372bef-2de6-4907-9a70-c13c704b0c03)
 
