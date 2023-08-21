@@ -25,9 +25,9 @@ the course, this project extended the learning by:
 
 ## Documentation and Screenshots
 
-- [Test Plan](Documentation/test_plan_supersqa_ecommerce_store.pdf)
-- [Bug Report Video](Documentation/super-sqa_bug_report.mp4)
-- [Test Case Example](Documentation/test_case_e2e_video.mp4)
+- [Test Plan](supersqa-demostore-automation/Documentation/test_plan_supersqa_ecommerce_store.pdf)
+- [Bug Report Video](supersqa-demostore-automation/Documentation/super-sqa_bug_report.mp4)
+- [Test Case Example](supersqa-demostore-automation/Documentation/test_case_e2e_video.mp4)
 
 ## Acknowledgments
 
