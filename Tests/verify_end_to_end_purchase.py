@@ -175,8 +175,7 @@ class TestEndToEndPurchase(unittest.TestCase):
         print('Test completed')
 
 
-if __name__ == '__main__':
-    unittest.main()
+
 
 
 
