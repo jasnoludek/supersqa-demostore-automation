@@ -52,5 +52,3 @@ class TestRegisterNewAccount(unittest.TestCase):
         cls.browser.quit()
         print('Test completed')
 
-if __name__ == '__main__':
-    unittest.main()
