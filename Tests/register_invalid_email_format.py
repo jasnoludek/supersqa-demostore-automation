@@ -4,8 +4,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
-from Pages.home_page import HomePage
-from Pages.registration_page import RegistrationPage
+from pages.home_page import HomePage
+from pages.registration_page import RegistrationPage
 
 class TestInvalidEmailFormat(unittest.TestCase):
 

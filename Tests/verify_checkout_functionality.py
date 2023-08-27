@@ -1,15 +1,17 @@
-import time
 import unittest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-from Pages.home_page import HomePage
-from Pages.login_page import LoginPage
-from Pages.my_account_page import MyAccountPage
-from Pages.product_page import ProductPage
-from Pages.cart_page import CartPage
-from Pages.checkout_page import CheckOutPage
+from pages.home_page import HomePage
+from pages.login_page import LoginPage
+from pages.my_account_page import MyAccountPage
+from pages.product_page import ProductPage
+from pages.cart_page import CartPage
+from pages.checkout_page import CheckOutPage
 
 
 class TestEndToEndPurchase(unittest.TestCase):
@@ -17,59 +19,45 @@ class TestEndToEndPurchase(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.browser = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-        cls.checkout_page = CheckOutPage(cls.browser)
 
     def test_end_to_end_purchase(self):
         browser = self.browser
 
         browser.get("http://demostore.supersqa.com/")
 
-        # Login to account
         homepage = HomePage(browser)
-        homepage.click_myAccount()
-
         login = LoginPage(browser)
+        myaccount = MyAccountPage(browser)
+        product = ProductPage(browser)
+        cart_page = CartPage(browser)
+        checkout_page = CheckOutPage(browser)
+
+        # Login to account
+        homepage.click_myAccount()
         login.enter_username('shopper@gmail.com')
         login.enter_password('MyPassword1234$')
         login.click_login()
 
-        time.sleep(2)
-
         # Navigate back to home page
-        myaccount = MyAccountPage(browser)
         myaccount.click_home()
 
-        time.sleep(2)
-
         # Click on product
-        homepage = HomePage(browser)
         homepage.click_album()
 
-        time.sleep(2)
-
         # Add item to cart
-        product = ProductPage(browser)
         product.add_item_to_cart()
 
         # Verify item added to cart
-        product = ProductPage(browser)
         item_added_confirmation_message = product.get_confirmation_message()
         expected_message = 'View cart\n“Album” has been added to your cart.'
         self.assertEqual(item_added_confirmation_message, expected_message)
 
-        time.sleep(2)
-
         # Go to cart by clicking "View Cart"
-        product = ProductPage(browser)
         product.click_view_cart()
 
-        time.sleep(2)
-
         # Verify product items, unit prices, item quantities
-        cart_page = CartPage(browser)
         product_unit_price = cart_page.get_product_unit_price()
         item_quantity_input = cart_page.get_item_quantity_input()
-
 
         # Define the expected unit price
         expected_unit_price = "$15.00"
@@ -94,14 +82,12 @@ class TestEndToEndPurchase(unittest.TestCase):
             # Verify that the calculated total price matches the displayed total price
             cart_total_amount_element = cart_page.get_cart_total()
             cart_total_amount_text = cart_total_amount_element.text
-            cart_total_amount = float(cart_total_amount_text[1:]) # Removing the dollar sign
+            cart_total_amount = float(cart_total_amount_text[1:])  # Removing the dollar sign
 
             self.assertEqual(total_price, cart_total_amount)
 
         # Proceed to checkout
         cart_page.proceed_to_checkout()
-
-        time.sleep(2)
 
         # Expected totals
         expected_product_subtotal = "$15.00"
@@ -109,9 +95,9 @@ class TestEndToEndPurchase(unittest.TestCase):
         expected_order_total = "$15.00"
 
         # Get the displayed totals
-        actual_product_subtotal = self.checkout_page.get_product_subtotal().text
-        actual_order_subtotal = self.checkout_page.get_order_subtotal().text
-        actual_order_total = self.checkout_page.get_order_total().text
+        actual_product_subtotal = checkout_page.get_product_subtotal().text
+        actual_order_subtotal = checkout_page.get_order_subtotal().text
+        actual_order_total = checkout_page.get_order_total().text
 
         # Compare expected and displayed totals
         self.assertEqual(actual_product_subtotal, expected_product_subtotal,
@@ -122,25 +108,38 @@ class TestEndToEndPurchase(unittest.TestCase):
                          f"Product Subtotal: {actual_order_total} != {expected_order_total}")
 
         # Enter coupon code
-        checkout_page = CheckOutPage(browser)
         checkout_page.click_coupon_link()
-        time.sleep(2)
-        checkout_page.enter_coupon_code("SSQA100")
+
+        # Wait for the coupon code input to be visible and then enter the code
+        coupon_input_locator = checkout_page.coupon_code_textbox_id
+        coupon_input = WebDriverWait(self.browser, 10).until(
+            EC.visibility_of_element_located((By.ID, coupon_input_locator))
+        )
+        coupon_input.clear()
+        coupon_input.send_keys("SSQA100")
         checkout_page.click_apply_coupon_button()
 
-        time.sleep(3)
+        # Wait for the coupon discount amount to be present and visible
+        coupon_discount_locator = checkout_page.coupon_discount_amount_css
+        coupon_discount_element = WebDriverWait(self.browser, 10).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, coupon_discount_locator))
+        )
+
+        # Get the coupon discount amount
+        discount_amount = coupon_discount_element.text
 
         # Verify coupon applied to total
         expected_discount_amount = "$15.00"
-        discount_amount = self.checkout_page.get_discount_amount().text
         self.assertEqual(expected_discount_amount, discount_amount)
 
         # Verify new total = $0.00
         expected_new_total = "$0.00"
-        new_total = self.checkout_page.get_order_total().text
+        new_total_locator = checkout_page.order_total_css
+        new_total_element = WebDriverWait(self.browser, 10).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, new_total_locator))
+        )
+        new_total = new_total_element.text
         self.assertEqual(expected_new_total, new_total)
-
-        time.sleep(2)
 
         # Enter billing data
         checkout_page.enter_firstname('John')
@@ -154,19 +153,19 @@ class TestEndToEndPurchase(unittest.TestCase):
         checkout_page.enter_phone_number('1231231234')
         checkout_page.enter_order_notes('Thank you.')
 
-        time.sleep(2)
-
         # Click "Place order"
         checkout_page.click_place_order()
 
-        time.sleep(2)
-
         # Verification of order placement
         expected_verification_message = "Thank you. Your order has been received."
-        actual_verification_message = self.checkout_page.get_order_confirmation().text
-        self.assertEqual(expected_verification_message, actual_verification_message)
 
-        time.sleep(5)
+        # Wait for the order confirmation message to be visible
+        verification_message_locator = checkout_page.order_received_confirmation_xpath
+        verification_message_element = WebDriverWait(self.browser, 10).until(
+            EC.visibility_of_element_located((By.XPATH, verification_message_locator))
+        )
+        actual_verification_message = verification_message_element.text
+        self.assertEqual(expected_verification_message, actual_verification_message)
 
     @classmethod
     def tearDownClass(cls):

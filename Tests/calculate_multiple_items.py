@@ -4,9 +4,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
-from Pages.home_page import HomePage
-from Pages.product_page import ProductPage
-from Pages.cart_page import CartPage
+from pages.home_page import HomePage
+from pages.product_page import ProductPage
+from pages.cart_page import CartPage
 
 class TestMultipleItemsPriceCalculation(unittest.TestCase):
 

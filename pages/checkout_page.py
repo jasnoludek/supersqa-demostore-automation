@@ -37,7 +37,7 @@ class CheckOutPage:
         self.place_order_button_id = Locators.place_order_button_id
 
         # Order received confirmation
-        self.order_received_confirmation_css = Locators.order_received_confirmation_css
+        self.order_received_confirmation_xpath = Locators.order_received_confirmation_xpath
 
     def get_product_subtotal(self):
         return self.browser.find_element(By.CSS_SELECTOR, self.product_subtotal_css)
@@ -106,5 +106,5 @@ class CheckOutPage:
         self.browser.find_element(By.ID, self.place_order_button_id).click()
 
     def get_order_confirmation(self):
-        return self.browser.find_element(By.XPATH, self.order_received_confirmation_css)
+        return self.browser.find_element(By.XPATH, self.order_received_confirmation_xpath)
 

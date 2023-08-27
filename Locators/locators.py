@@ -97,6 +97,6 @@ class Locators():
     place_order_button_id = 'place_order'
 
     # Order received confirmation
-    order_received_confirmation_css = '//*[@id="post-8"]/div/div/div/p'
+    order_received_confirmation_xpath = '//*[@id="post-8"]/div/div/div/p'
 
 
