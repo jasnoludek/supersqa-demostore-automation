@@ -1,11 +1,14 @@
-from Locators.locators import Locators
+from locators.locators import Locators
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 
 class HomePage:
 
     def __init__(self, browser):
         self.browser = browser
+
+        self.search_field_css = Locators.search_field_css
 
         self.myAccount_link_css = Locators.myAccount_link_css
 
@@ -71,3 +74,8 @@ class HomePage:
 
     def get_cart_total(self):
         return self.browser.find_element(By.CSS_SELECTOR, self.cart_total_amount_css).text
+
+    def search(self, product):
+        self.browser.find_element(By.CSS_SELECTOR, self.search_field_css).clear()
+        self.browser.find_element(By.CSS_SELECTOR, self.search_field_css).send_keys(product)
+        self.browser.find_element(By.CSS_SELECTOR, self.search_field_css).send_keys(Keys.RETURN)

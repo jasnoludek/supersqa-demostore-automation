@@ -1,4 +1,4 @@
-from Locators.locators import Locators
+from locators.locators import Locators
 from selenium.webdriver.common.by import By
 
 class ProductPage():

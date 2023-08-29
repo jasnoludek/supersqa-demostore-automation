@@ -3,6 +3,9 @@ from selenium.webdriver.common.by import By
 class Locators():
 
     # Home page objects
+
+    search_field_css = '#woocommerce-product-search-field-0'
+
     myAccount_link_css = '#site-navigation > div:nth-child(2) > ul > li.page_item.page-item-9'
 
     product_list_css = '#main > ul > li.product.type-product'
