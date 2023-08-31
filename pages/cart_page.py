@@ -14,6 +14,10 @@ class CartPage:
         self.cart_subtotal_css = Locators.cart_subtotal_css
         self.cart_total_css = Locators.cart_total_css
         self.proceed_to_checkout_button_css = Locators.proceed_to_checkout_button_css
+        self.cart_item_row_xpath = Locators.cart_item_row_xpath
+        self.remove_from_cart_button_css = Locators.remove_from_cart_button_css
+        self.cart_product_subtotal_css = Locators.cart_product_subtotal_css
+        self.cart_subtotal_amt_css = Locators.cart_subtotal_amt_css
 
     def get_product_icon(self):
         return self.browser.find_element(By.CSS_SELECTOR, self.product_icon_css)
@@ -35,3 +39,15 @@ class CartPage:
 
     def proceed_to_checkout(self):
         self.browser.find_element(By.CSS_SELECTOR, self.proceed_to_checkout_button_css).click()
+
+    def get_cart_item_row(self):
+        return self.browser.find_elements(By.XPATH, self.cart_item_row_xpath)
+
+    def get_remove_from_cart_buttons(self):
+        return self.browser.find_elements(By.CSS_SELECTOR, self.remove_from_cart_button_css)
+
+    def get_product_subtotals(self):
+        return self.browser.find_elements(By.CSS_SELECTOR, self.cart_product_subtotal_css)
+
+    def get_subtotal(self):
+        return self.browser.find_element(By.CSS_SELECTOR, self.cart_subtotal_amt_css)

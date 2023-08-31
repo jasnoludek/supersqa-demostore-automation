@@ -3,8 +3,13 @@ from selenium.webdriver.common.by import By
 class Locators():
 
     # Home page objects
-
     search_field_css = '#woocommerce-product-search-field-0'
+
+    hoodie_result_xpath = "//ul[@class='products columns-4']/li"
+
+    add_to_cart_button_xpath = "//a[@class='button product_type_simple add_to_cart_button ajax_add_to_cart']"
+
+    cart_link_css = '.cart-contents'
 
     myAccount_link_css = '#site-navigation > div:nth-child(2) > ul > li.page_item.page-item-9'
 
@@ -68,6 +73,10 @@ class Locators():
     cart_subtotal_css = '#post-7 > div > div > div.cart-collaterals > div > table > tbody > tr.cart-subtotal > td > span > bdi'
     cart_total_css = '#post-7 > div > div > div.cart-collaterals > div > table > tbody > tr.order-total > td > strong > span > bdi'
     proceed_to_checkout_button_css = '#post-7 > div > div > div.cart-collaterals > div > div > a'
+    cart_item_row_xpath = "//td[@class='product-name']"
+    remove_from_cart_button_css = ".remove"
+    cart_product_subtotal_css = "tbody tr td:nth-child(6)"
+    cart_subtotal_amt_css = "tr[class='cart-subtotal'] td[data-title='Subtotal']"
 
     # Checkout page objects
     # Order total verification
