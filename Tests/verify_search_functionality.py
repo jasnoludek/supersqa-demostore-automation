@@ -2,7 +2,6 @@ import unittest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.common.by import By
 
 from pages.home_page import HomePage
 
@@ -22,7 +21,7 @@ class TestSearchForHoodies(unittest.TestCase):
 
         homepage.search("hoodie")
 
-        results = browser.find_elements(By.XPATH, "//ul[@class='products columns-4']/li")
+        results = homepage.get_hoodie_search_results()
         count = len(results)
         assert count == 3
 
