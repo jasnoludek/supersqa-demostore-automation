@@ -4,8 +4,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
-from Pages.home_page import HomePage
-from Pages.registration_page import RegistrationPage
+from pages.home_page import HomePage
+from pages.registration_page import RegistrationPage
 
 class TestInvalidEmailFormat(unittest.TestCase):
 
@@ -19,14 +19,23 @@ class TestInvalidEmailFormat(unittest.TestCase):
         browser.get("http://demostore.supersqa.com/")
 
         homepage = HomePage(browser)
+        register = RegistrationPage(browser)
+
+        # Navigate to login page
         homepage.click_myAccount()
 
-        register = RegistrationPage(browser)
+        # Attempt to register with invalid email address
         register.register_username('bademailgmail.com')
         register.register_password('NewPassword1234!')
         register.click_register()
 
         time.sleep(2)
+
+        # Verify JavaScript alert
+        alert = browser.switch_to.
+        alert_text = alert.text
+        print(f"Alert message displayed: {alert_text}")
+        alert.accept()
 
         # Verification (intentional failure scenario)
         page_source = browser.page_source

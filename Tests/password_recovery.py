@@ -4,8 +4,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
-from Pages.login_page import LoginPage
-from Pages.lost_password_page import RetrievePassword
+from pages.login_page import LoginPage
+from pages.lost_password_page import RetrievePassword
 
 class TestRetrievePassword(unittest.TestCase):
 

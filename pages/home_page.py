@@ -1,11 +1,20 @@
-from Locators.locators import Locators
+from locators.locators import Locators
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 
 class HomePage:
 
     def __init__(self, browser):
         self.browser = browser
+
+        self.cart_link_css = Locators.cart_link_css
+
+        self.search_field_css = Locators.search_field_css
+
+        self.hoodie_result_xpath = Locators.hoodie_result_xpath
+
+        self.add_to_cart_button_xpath = Locators.add_to_cart_button_xpath
 
         self.myAccount_link_css = Locators.myAccount_link_css
 
@@ -71,3 +80,18 @@ class HomePage:
 
     def get_cart_total(self):
         return self.browser.find_element(By.CSS_SELECTOR, self.cart_total_amount_css).text
+
+    def search(self, product):
+        self.browser.find_element(By.CSS_SELECTOR, self.search_field_css).clear()
+        self.browser.find_element(By.CSS_SELECTOR, self.search_field_css).send_keys(product)
+        self.browser.find_element(By.CSS_SELECTOR, self.search_field_css).send_keys(Keys.RETURN)
+
+    def get_hoodie_search_results(self):
+        return self.browser.find_elements(By.XPATH, self.hoodie_result_xpath)
+
+    def click_cart(self):
+        self.browser.find_element(By.CSS_SELECTOR, self.cart_link_css).click()
+
+    def get_add_to_cart_buttons(self):
+        return self.browser.find_elements(By.XPATH, self.add_to_cart_button_xpath)
+
